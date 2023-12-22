@@ -5,7 +5,8 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import HomeDashboard from "./pages/HomeDashboard";
+import HomeDashboardPage from "./pages/HomeDashboardPage";
+import AccountSettingsPage from "./pages/AccountSettingsPage";
 
 function App() {
   const action = useNavigationType();
@@ -45,8 +46,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomeDashboard />} />
-      {/* <Route path="/testhome" element={<HomeDashboard />} /> */}
+      <Route path="/" element={<HomeDashboardPage />} />
+      <Route path="/account-settings" element={<AccountSettingsPage />} />   
     </Routes>
   );
 }
