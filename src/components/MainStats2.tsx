@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useEffect } from "react"
 import InputVideoBox from "./InputVideoBox"
 import ComparisonBox from "./ComparisonBox"
 import LiveMatchBox from "./LiveMatchBox"
@@ -11,8 +11,9 @@ import MatchesBox from "./MatchesBox"
 import "./mainstats2.css"
 
 const MainStats2: FunctionComponent = () => {
+
     return (
-        <div className="w-full home">
+        <div className="w-full home ">
             <div className="box box1">
                 <InputVideoBox />
             </div>

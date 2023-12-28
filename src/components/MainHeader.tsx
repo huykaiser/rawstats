@@ -10,7 +10,7 @@ const MainHeader: FunctionComponent = () => {
                     <img
                         className="rounded-[50%] w-6 h-6 object-cover mr-4"
                         alt=""
-                        src="/ellipse-4@2x.png"
+                        src="/images/ellipse-4@2x.png"
                     />
                     <div className="font-black flex items-center w-[210px] h-[29px] shrink-0 text-[20px]">RAW Cup</div>
                 </div>
@@ -27,7 +27,7 @@ const MainHeader: FunctionComponent = () => {
 
             {/* EXPORT DATA BUTTON */}
             <div className="relative h-[30px] text-center text-xs">
-                <Button className="">Export data <ArrowDownToLine/></Button>
+                <Button className="hover:bg-secondary hover:text-secondary-foreground">Export data <ArrowDownToLine/></Button>
             </div>
         </div>
     )
