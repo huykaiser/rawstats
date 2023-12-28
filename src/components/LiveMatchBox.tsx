@@ -21,8 +21,8 @@ const LiveMatchBox: FunctionComponent = () => {
             <div className="w-60 flex flex-row items-center justify-center gap-[25px] text-mediumslateblue">
                 <img
                     className="relative rounded-[31.47px] w-10 h-10 object-cover"
-                    alt=""
-                    src="/image@2x.png"
+                    alt="sweden"
+                    src="/images/sweden.png"
                 />
                 <div className="rounded-8xs bg-lightsteelblue-200 box-border w-16 shrink-0 flex flex-row items-center justify-center py-1.5 px-4 gap-[8px] border-[1px] border-solid border-mediumslateblue">
                     <div className="flex-1 relative font-black">1</div>
@@ -32,7 +32,7 @@ const LiveMatchBox: FunctionComponent = () => {
                 <img
                     className="relative rounded-[31.47px] w-10 h-10 object-cover"
                     alt=""
-                    src="/image@2x.png"
+                    src="/images/sweden.png"
                 />
             </div>
             <div className="flex flex-col items-center justify-start text-xs">

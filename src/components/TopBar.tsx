@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useEffect } from "react"
 
 const TopBar: FunctionComponent = () => {
     return (
@@ -6,7 +6,7 @@ const TopBar: FunctionComponent = () => {
             <img
                 className="h-[19.99px] object-cover hover:scale-[1.5] transition duration-500"
                 alt="search"
-                src="/look.svg"
+                src="/images/look.svg"
             />
 
             <div className="font-medium">Search for...</div>

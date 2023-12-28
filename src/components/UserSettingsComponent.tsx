@@ -2,36 +2,55 @@ import { FunctionComponent, useState } from "react";
 import UserSettingsDetail from "./UserSettingsDetail";
 import { Button } from "./ui/button";
 import CompanySettingsDetail from "./CompanySettingsDetail";
+import { cn } from "../lib/utils";
+
+let tabMenuList = [
+    {
+        title: "Company Settings",
+        isClicked: false
+    },
+    {
+        title: "User Settings",
+        isClicked: true
+    }
+];
 
 export const UserSettingsComponent: FunctionComponent = (): JSX.Element => {
     const [isOpenedUserSettings, setIsOpenedUserSettings] = useState(true);
+    const [itemList, setItemList] = useState(() => tabMenuList);
 
-    const handleUserOrCompanySettingsToggle = (openUserSettings: boolean) => {
-        setIsOpenedUserSettings(openUserSettings);
+    const handleClicked = (itemMenu: any) => {
+        const clickedItem = itemMenu.target.outerText;
+
+        tabMenuList = itemList.map(item => {
+            if (item.title === clickedItem) {
+                item.isClicked = true;
+                setIsOpenedUserSettings(item.isClicked);
+                return { ...item };
+            } else {
+                item.isClicked = false;
+                setIsOpenedUserSettings(item.isClicked);
+                return item;
+            }
+        });
+
+        setItemList(tabMenuList);
     }
 
     return (
-        <div className="flex flex-col w-[1280px] h-[930px] items-start gap-[5px] p-[10px] relative overflow-hidden">
-            <div className="relative w-[210px] h-[29px] mt-[-1.00px] [font-family:'Montserrat-SemiBold',Helvetica] font-semibold text-white text-[20px] tracking-[0] leading-[normal]">
-                Account Settings
-            </div>
+        <div className="flex flex-col w-full h-full items-start gap-[5px] pt-[10px] pl-[10px] overflow-auto">
+            <div className="w-[210px] h-[29px] mt-[-1.00px] [font-family:'Montserrat-SemiBold',Helvetica] font-semibold text-white text-[20px] tracking-[0] leading-[normal]">Account Settings</div>
 
-            <div className="flex w-[450px] h-[28px] items-start relative">
-                <div className="flex w-[150px] h-[22px] items-center gap-[15px] relative border-b-2 [border-bottom-style:solid] border-[#979797]">
-                    <div className="relative [font-family:'Inter-Medium',Helvetica] font-medium text-[#ffffff] text-[15px] leading-[normal] w-[150px] tracking-[0]">
-                        <Button onClick={() => handleUserOrCompanySettingsToggle(false)}>Company Settings</Button>
+            <div className="flex w-[450px] h-[28px] items-start">
+                {itemList.map((item) => (
+                    <div key={item.title} className={cn("box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid", item.isClicked ? " border-mediumslateblue" : "border-darkgray")} onClick={(item) => handleClicked(item)}>
+                        <div className="relative flex items-center w-[120px] shrink-0">{item.title}</div>
                     </div>
-                </div>
-
-                <div className="flex w-[150px] h-[22px] items-center gap-[15px] relative border-b-2 [border-bottom-style:solid] border-[#6c72ff]">
-                    <div className="relative [font-family:'Inter-Medium',Helvetica] font-medium text-[#ffffff] text-[15px] leading-[normal] w-[150px] tracking-[0]">
-                        <Button onClick={() => handleUserOrCompanySettingsToggle(true)}>User Settings</Button>
-                    </div>
-                </div>
+                ))}
             </div>
 
             {/* Upload your photo */}
-            <div className="inline-flex flex-col items-start gap-[10px] relative flex-[0_0_auto]">
+            <div className="inline-flex flex-col items-start gap-[10px] relative">
                 <div className="relative w-[90px] h-[14px] mt-[-1.00px] [font-family:'Manrope-Medium',Helvetica] font-medium text-[#d9d9d9] text-[9.9px] tracking-[0] leading-[normal]">
                     Your Profile&nbsp;&nbsp;Picture
                 </div>
@@ -49,15 +68,14 @@ export const UserSettingsComponent: FunctionComponent = (): JSX.Element => {
             </div>
 
             {
-                isOpenedUserSettings &&
-                <UserSettingsDetail />
-            }
-
-            {
                 !isOpenedUserSettings &&
                 <CompanySettingsDetail />
             }
 
+            {
+                isOpenedUserSettings &&
+                <UserSettingsDetail />
+            }
         </div>
     );
 };

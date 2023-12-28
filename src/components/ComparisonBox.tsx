@@ -1,165 +1,120 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useState } from "react"
+import { cn } from "../lib/utils";
+
+let tabMenuList = [
+    {
+        title: "Compare Stats",
+        isClicked: true
+    },
+    {
+        title: "Line-up",
+        isClicked: false
+    }
+];
+
+let comparisonItemsList = [
+    {
+        title: "POSSESSION",
+        team1: "70%",
+        team2: "30%"
+    },
+    {
+        title: "SHOTS",
+        team1: "70%",
+        team2: "30%"
+    },
+    {
+        title: "PASSES",
+        team1: "30%",
+        team2: "70%"
+    },
+    {
+        title: "SUCCESSFUL DRIBBLINGS",
+        team1: "30%",
+        team2: "70%"
+    },
+    {
+        title: "TACKLES",
+        team1: "70%",
+        team2: "30%"
+    },
+    {
+        title: "SUCCESSFUL TACKLES",
+        team1: "30%",
+        team2: "70%"
+    },
+    {
+        title: "OFFSIDE",
+        team1: "30%",
+        team2: "70%"
+    },
+    {
+        title: "CORNERS",
+        team1: "70%",
+        team2: "30%"
+    }
+];
 
 const ComparisonBox: FunctionComponent = () => {
+    const [itemList, setItemList] = useState(() => tabMenuList);
+
+    const handleClicked = (itemMenu: any) => {
+        const clickedItem = itemMenu.target.outerText;
+        // console.log("titel: ", clickedItem);
+
+        tabMenuList = itemList.map(item => {
+            if (item.title === clickedItem) {
+                item.isClicked = true;
+                return { ...item };
+            } else {
+                item.isClicked = false;
+                return item;
+            }
+        });
+        setItemList(tabMenuList);
+    }
+
     return (
         <div className="h-full shrink-0 flex flex-col items-center justify-between">
-            <div className="rounded-3xs bg-darkslategray-300 w-full h-full overflow-hidden shrink-0 flex flex-col items-center justify-between py-2.5 px-5 box-border">
+            <div className="rounded-3xs bg-darkslategray-300 w-full h-full overflow-auto shrink-0 flex flex-col items-center justify-between py-2.5 px-5 box-border">
                 <div className="w-[445px] flex flex-row items-center justify-between p-[5px] box-border">
                     <div className="shrink-0 flex flex-row items-center justify-start py-0 px-2.5 border-b-[1px] border-solid border-darkslategray-300">
-                        <div className="box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid border-mediumslateblue">
-                            <div className="relative flex items-center w-[120px] shrink-0">Compare stats</div>
-                        </div>
-                        <div className="box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid border-darkgray">
-                            <div className="relative flex items-center w-[120px] shrink-0">Line-up</div>
-                        </div>
+                        {itemList.map((item) => (
+                            <div key={item.title} className={cn("box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid", item.isClicked ? " border-mediumslateblue" : "border-darkgray")} onClick={(item) => handleClicked(item)}>
+                                <div className=" flex items-center w-[120px] shrink-0">{item.title}</div>
+                            </div>
+                        ))}
                     </div>
+
+                    {/* 3 DOTS */}
                     <div className="shrink-0 flex flex-col items-end justify-center gap-[1px]">
-                        <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
-                        <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
-                        <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
+                        <div className=" rounded-[50%] bg-darkslategray-100 w-1 h-1" />
+                        <div className=" rounded-[50%] bg-darkslategray-100 w-1 h-1" />
+                        <div className=" rounded-[50%] bg-darkslategray-100 w-1 h-1" />
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col items-center justify-between py-2.5 px-0 text-mediumblue">
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-start justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-start justify-start gap-[94px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                51%
+
+                <div className="w-full flex-1 flex flex-col items-center justify-between py-2.5 px-0 text-mediumblue">
+                    {comparisonItemsList.map((item) => (
+                        <div key={item.title} className="self-stretch shrink-0 flex flex-row flex-wrap items-start justify-center gap-[6px]">
+                            <div className="shrink-0 flex flex-row items-start justify-start gap-[94px]">
+                                <div className=" font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
+                                    {item.team1}
+                                </div>
+                                <div className=" text-white text-center inline-block w-[180px] h-[16.73px] shrink-0">
+                                    {item.title}
+                                </div>
+                                <div className=" font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
+                                    {item.team2}
+                                </div>
                             </div>
-                            <div className="relative text-white text-center inline-block w-[116.76px] h-[16.73px] shrink-0">
-                                POSSESSION
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                49%
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-start justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[184px] h-[5px]" />
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[94px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                29
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[116.76px] h-[16.73px] shrink-0">
-                                SHOTS
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                10
+
+                            <div className="w-[90%] shrink-0 flex flex-row items-start justify-center gap-[6px]">
+                                <div className={`rounded-xl  bg-mediumblue w-[${item.team1}] h-[5px]`} /> 
+                                <div className={`rounded-xl  bg-mediumslateblue w-[${item.team2}] h-[5px]`} />
                             </div>
                         </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="h-[5px] shrink-0 flex flex-col items-start justify-between">
-                                <div className="relative rounded-xl bg-mediumslateblue w-[100px] h-[5px]" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[94px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                661
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[116.76px] h-[16.73px] shrink-0">
-                                PASSES
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                246
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[85px] h-[5px]" />
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[30px]">
-                            <div className="relative font-black inline-block w-10 h-[17.29px] shrink-0">
-                                53%
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[232px] h-[17px] shrink-0">
-                                SUCCESSFUL DRIBBLINGS %
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                53%
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[184px] h-[5px]" />
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[65px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                47
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[175.49px] h-[16.73px] shrink-0">
-                                TACKLES
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                29
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="h-[5px] shrink-0 flex flex-col items-start justify-center">
-                                <div className="relative rounded-xl bg-mediumslateblue w-[111px] h-[5px]" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[45px]">
-                            <div className="relative font-black inline-block w-[35px] h-[17.29px] shrink-0">
-                                55%
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[212px] h-[17px] shrink-0">
-                                SUCCESSFUL TACKLES %
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                45%
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[155px] h-[5px]" />
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[65px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                1
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[175.49px] h-[16.73px] shrink-0">
-                                OFFSIDE
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                6
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[50px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[184px] h-[5px]" />
-                        </div>
-                    </div>
-                    <div className="self-stretch shrink-0 flex flex-row flex-wrap items-center justify-start gap-[6px]">
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[65px]">
-                            <div className="relative font-black inline-block w-[32.18px] h-[17.29px] shrink-0">
-                                6
-                            </div>
-                            <div className="relative text-white text-center inline-block w-[175.49px] h-[16.73px] shrink-0">
-                                CORNERS
-                            </div>
-                            <div className="relative font-black text-mediumslateblue text-right inline-block w-[36.18px] h-[17.85px] shrink-0">
-                                3
-                            </div>
-                        </div>
-                        <div className="shrink-0 flex flex-row items-center justify-start gap-[6px]">
-                            <div className="relative rounded-xl bg-mediumblue w-[184px] h-[5px]" />
-                            <div className="relative rounded-xl bg-mediumslateblue w-[100px] h-[5px]" />
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>

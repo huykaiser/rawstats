@@ -1,111 +1,133 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent, useState } from "react"
+import { cn } from "../lib/utils";
+
+let tabMenuList = [
+    {
+        title: "Top Player",
+        isClicked: true
+    },
+    {
+        title: "All Players",
+        isClicked: false
+    }
+];
+
+let playerDetails = [
+    {
+        id: 1,
+        title: "Matches played",
+        info: 8
+    },
+    {
+        id: 2,
+        title: "Goals scored",
+        info: 6
+    },
+    {
+        id: 3,
+        title: "Assists given",
+        info: 3
+    },
+    {
+        id: 4,
+        title: "expected Goals",
+        info: 22
+    },
+    {
+        id: 5,
+        title: "Fouls made",
+        info: 2
+    },
+];
+
+let playerStats = [
+    {
+        title: "Matches played",
+        info: 8
+    },
+    {
+        title: "Average rating",
+        info: 7.1
+    },
+    {
+        title: "Event goals",
+        info: 12
+    },
+    {
+        title: "Event assists",
+        info: 4
+    },
+];
 
 const PlayerBox: FunctionComponent = () => {
+    const [itemList, setItemList] = useState(() => tabMenuList);
+
+    const handleClicked = (itemMenu: any) => {
+        const clickedItem = itemMenu.target.outerText;
+        // console.log("titel: ", clickedItem);
+
+        tabMenuList = itemList.map(item => {
+            if (item.title === clickedItem) {
+                item.isClicked = true;
+                return { ...item };
+            } else {
+                item.isClicked = false;
+                return item;
+            }
+        });
+
+        setItemList(tabMenuList);
+    }
+
     return (
         <div className="rounded-3xs bg-darkslategray-300 w-full h-[200px] flex flex-col items-center justify-between text-center font-inter">
             <div className="w-[270px] flex flex-row items-center justify-between p-[5px] box-border text-left font-montserrat">
                 <div className="shrink-0 flex flex-row items-center justify-start py-0 px-2.5 border-b-[1px] border-solid border-darkslategray-300">
-                    <div className="box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid border-mediumslateblue">
-                        <div className="relative font-black flex items-center w-[120px] shrink-0">
-                            Top Player
+                    {itemList.map((item) => (
+                        <div key={item.title} className={cn("box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid", item.isClicked ? " border-mediumslateblue" : "border-darkgray")} onClick={(item) => handleClicked(item)}>
+                            <div className="relative flex items-center w-[120px] shrink-0">{item.title}</div>
                         </div>
-                    </div>
-                    <div className="box-border w-[125px] h-[22px] flex flex-row items-center justify-start border-b-[2px] border-solid border-darkgray">
-                        <div className="relative flex items-center w-[120px] shrink-0">
-                            All Players
-                        </div>
-                    </div>
+                    ))}
                 </div>
+
                 <div className="shrink-0 flex flex-col items-end justify-center gap-[1px]">
                     <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
                     <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
                     <div className="relative rounded-[50%] bg-darkslategray-100 w-1 h-1" />
                 </div>
             </div>
+
             <div className="w-[250px] flex flex-row items-end justify-between text-5xs">
                 <div className="relative w-[120px] h-[120px] overflow-hidden shrink-0">
                     <img
                         className="absolute top-[-5px] left-[-13px] w-36 h-[125px] object-cover"
                         alt=""
-                        src="/witsel-1@2x.png"
+                        src="/images/witsel-1@2x.png"
                     />
                 </div>
-                <div className="w-[120px] h-[120px] overflow-hidden shrink-0 flex flex-col items-center justify-between py-2.5 px-0 box-border">
+
+                <div className="w-[120px] h-[120px]  shrink-0 flex flex-col items-center justify-between py-2.5 px-0 box-border">
                     <div className="h-[86px] flex flex-col items-center justify-center">
-                        <div className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
-                            <div className="relative leading-[24px] font-medium">
-                                Matches played
+                        {playerDetails.map((item) => (
+                            <div key={item.id} className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
+                                <div className="relative leading-[24px] font-medium">{item.title}</div>
+                                <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">{item.info}</i>
                             </div>
-                            <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">
-                                8
-                            </i>
-                        </div>
-                        <div className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
-                            <div className="relative leading-[24px] font-medium">
-                                Goals scored
-                            </div>
-                            <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">
-                                6
-                            </i>
-                        </div>
-                        <div className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
-                            <div className="relative leading-[24px] font-medium">
-                                Assists given
-                            </div>
-                            <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">
-                                3
-                            </i>
-                        </div>
-                        <div className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
-                            <div className="relative leading-[24px] font-medium">
-                                expected Goals/90
-                            </div>
-                            <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">
-                                1.22
-                            </i>
-                        </div>
-                        <div className="box-border w-[115px] shrink-0 flex flex-row items-center justify-between border-b-[1px] border-solid border-darkslategray-100">
-                            <div className="relative leading-[24px] font-medium">
-                                Fouls made
-                            </div>
-                            <i className="relative text-xs leading-[24px] font-black text-mediumslateblue">
-                                2
-                            </i>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
-            <div className="rounded-3xs bg-slateblue w-[270px] flex flex-row flex-wrap items-center justify-between py-0 px-5 box-border">
-                <div className="h-[38px] shrink-0 flex flex-col items-center justify-center">
-                    <i className="relative leading-[10px] font-bold">14</i>
-                    <b className="relative text-8xs leading-[5px]">
-                        <p className="m-0">Matches</p>
-                        <p className="m-0">played</p>
-                    </b>
-                </div>
-                <div className="h-[38px] shrink-0 flex flex-col items-center justify-center">
-                    <i className="relative leading-[10px] font-bold">7,1</i>
-                    <b className="relative text-8xs leading-[5px]">
-                        <p className="m-0">Average</p>
-                        <p className="m-0">rating</p>
-                    </b>
-                </div>
-                <div className="h-[38px] shrink-0 flex flex-col items-center justify-center">
-                    <i className="relative leading-[10px] inline-block font-bold w-[15px]">
-                        12
-                    </i>
-                    <b className="relative text-8xs leading-[5px]">
-                        <p className="m-0">Event</p>
-                        <p className="m-0">goals</p>
-                    </b>
-                </div>
-                <div className="h-[38px] shrink-0 flex flex-col items-center justify-center">
-                    <i className="relative leading-[10px] font-bold">4</i>
-                    <b className="relative text-8xs leading-[5px]">
-                        <p className="m-0">Event</p>
-                        <p className="m-0">assists</p>
-                    </b>
-                </div>
+
+            <div className="w-full rounded-3xs bg-slateblue flex flex-row flex-wrap items-center justify-between py-0 px-5 box-border">
+                {playerStats.map((item) => (
+                    <div key={item.title} className="h-[38px] shrink-0 flex flex-col items-center justify-center">
+                        <i className="relative text-[14px] font-bold">{item.info}</i>
+                        <b className="relative text-[8px] leading-[5px]">
+                            <p className="m-0">{item.title}</p>
+                            {/* <p className="m-0">played</p> */}
+                        </b>
+                    </div>
+                ))}
             </div>
         </div>
     )
